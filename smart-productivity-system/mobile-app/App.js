@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useEffect, useState } from "react";
 import { ActivityIndicator, SafeAreaView, StatusBar, View } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -66,12 +67,25 @@ export default function App() {
     if (activeScreen === "audit") return <AuditFormScreen {...commonProps} />;
     if (activeScreen === "ideas") return <ImprovementIdeasScreen {...commonProps} />;
     return <DashboardScreen {...commonProps} />;
+=======
+import React from "react";
+import { SafeAreaView, StatusBar } from "react-native";
+import LoginScreen from "./screens/LoginScreen";
+
+export default function App() {
+  const handleLoginSuccess = (user) => {
+    alert(`Login success: ${user.name}`);
+>>>>>>> origin/main
   };
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <StatusBar barStyle="dark-content" />
+<<<<<<< HEAD
       {token && user ? renderAuthenticated() : <LoginScreen onLoginSuccess={handleLoginSuccess} />}
+=======
+      <LoginScreen onLoginSuccess={handleLoginSuccess} />
+>>>>>>> origin/main
     </SafeAreaView>
   );
 }

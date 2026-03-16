@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { Platform } from "react-native";
 
 const API_BASE_URL = Platform.OS === "android" ? "http://10.0.2.2:5000" : "http://localhost:5000";
@@ -26,3 +27,24 @@ export const createAuditRequest = (token, payload) => request("/audits", { metho
 export const getIdeasRequest = (token) => request("/ideas", { headers: { Authorization: `Bearer ${token}` } });
 export const createIdeaRequest = (token, payload) => request("/ideas", { method: "POST", headers: { Authorization: `Bearer ${token}` }, body: JSON.stringify(payload) });
 export const voteIdeaRequest = (token, ideaId) => request(`/ideas/vote/${ideaId}`, { method: "POST", headers: { Authorization: `Bearer ${token}` } });
+=======
+const API_BASE_URL = "http://10.0.2.2:5000";
+
+export const loginRequest = async (email, password) => {
+  const response = await fetch(`${API_BASE_URL}/auth/login`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ email, password }),
+  });
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.message || "Login failed");
+  }
+
+  return data;
+};
+>>>>>>> origin/main

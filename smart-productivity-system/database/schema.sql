@@ -1,9 +1,17 @@
 CREATE DATABASE productivity;
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/main
 \c productivity;
 
 CREATE TABLE departments (
   id SERIAL PRIMARY KEY,
+<<<<<<< HEAD
   name VARCHAR(50) NOT NULL UNIQUE
+=======
+  name VARCHAR(100) NOT NULL UNIQUE
+>>>>>>> origin/main
 );
 
 CREATE TABLE users (
@@ -12,12 +20,17 @@ CREATE TABLE users (
   email VARCHAR(100) NOT NULL UNIQUE,
   password VARCHAR(200) NOT NULL,
   role VARCHAR(20) NOT NULL CHECK (role IN ('Admin', 'Manager', 'Employee')),
+<<<<<<< HEAD
   department_id INT REFERENCES departments(id),
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+=======
+  department_id INT REFERENCES departments(id)
+>>>>>>> origin/main
 );
 
 CREATE TABLE tasks (
   id SERIAL PRIMARY KEY,
+<<<<<<< HEAD
   title VARCHAR(100) NOT NULL,
   description TEXT,
   assigned_user INT REFERENCES users(id),
@@ -25,11 +38,19 @@ CREATE TABLE tasks (
   deadline DATE,
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   CONSTRAINT uq_tasks_dedup UNIQUE (title, assigned_user, deadline)
+=======
+  title VARCHAR(200) NOT NULL,
+  description TEXT,
+  assigned_user INT REFERENCES users(id),
+  deadline TIMESTAMP,
+  status VARCHAR(20) NOT NULL DEFAULT 'Pending' CHECK (status IN ('Pending', 'In Progress', 'Completed'))
+>>>>>>> origin/main
 );
 
 CREATE TABLE audits (
   id SERIAL PRIMARY KEY,
   department_id INT NOT NULL REFERENCES departments(id),
+<<<<<<< HEAD
   score INT NOT NULL CHECK (score BETWEEN 0 AND 100),
   date DATE NOT NULL DEFAULT CURRENT_DATE,
   images TEXT[] DEFAULT ARRAY[]::TEXT[],
@@ -44,4 +65,8 @@ CREATE TABLE improvement_ideas (
   user_id INT NOT NULL REFERENCES users(id),
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   CONSTRAINT uq_ideas_title_user UNIQUE (title, user_id)
+=======
+  score NUMERIC(5,2) NOT NULL CHECK (score >= 0 AND score <= 100),
+  date DATE NOT NULL DEFAULT CURRENT_DATE
+>>>>>>> origin/main
 );
