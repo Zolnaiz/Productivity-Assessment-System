@@ -8,15 +8,15 @@ export default function TasksPage() {
   useEffect(() => { load(); }, []);
 
   return <div>
-    <h2>Task Management</h2>
+    <h2>Даалгаврын удирдлага</h2>
     <div style={{ marginBottom: 10 }}>
-      <input value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Task title" />
-      <button onClick={async () => { await createTask({ title, status: "Pending" }); setTitle(""); load(); }}>Create Task</button>
+      <input value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Даалгаврын нэр" />
+      <button onClick={async () => { await createTask({ title, status: "Pending" }); setTitle(""); load(); }}>Даалгавар нэмэх</button>
     </div>
-    <table border="1" cellPadding="8"><thead><tr><th>Title</th><th>Status</th><th>Actions</th></tr></thead><tbody>
+    <table border="1" cellPadding="8"><thead><tr><th>Нэр</th><th>Төлөв</th><th>Үйлдэл</th></tr></thead><tbody>
       {tasks.map((t) => <tr key={t.id}><td>{t.title}</td><td>{t.status}</td><td>
-        <button onClick={async () => { await updateTask(t.id, { status: "Completed" }); load(); }}>Mark Completed</button>
-        <button onClick={async () => { await deleteTask(t.id); load(); }}>Delete</button>
+        <button onClick={async () => { await updateTask(t.id, { status: "Completed" }); load(); }}>Дууссан болгох</button>
+        <button onClick={async () => { await deleteTask(t.id); load(); }}>Устгах</button>
       </td></tr>)}
     </tbody></table>
   </div>;

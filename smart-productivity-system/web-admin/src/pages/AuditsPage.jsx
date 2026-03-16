@@ -8,11 +8,11 @@ export default function AuditsPage() {
   useEffect(() => { load(); }, []);
 
   return <div>
-    <h2>Audit Results</h2>
+    <h2>Аудитын үр дүн</h2>
     <div style={{ marginBottom: 10 }}>
       <input type="number" value={form.department_id} onChange={(e) => setForm({ ...form, department_id: Number(e.target.value) })} />
       <input type="number" value={form.score} onChange={(e) => setForm({ ...form, score: Number(e.target.value) })} />
-      <button onClick={async () => { await createAudit(form); load(); }}>Add Audit</button>
+      <button onClick={async () => { await createAudit(form); load(); }}>Аудит нэмэх</button>
     </div>
     <ul>{audits.map((a) => <li key={a.id}>{a.department_name || a.department_id} - {a.score} ({a.date})</li>)}</ul>
   </div>;

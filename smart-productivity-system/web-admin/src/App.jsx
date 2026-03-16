@@ -13,15 +13,15 @@ function Layout({ children }) {
   return (
     <div style={{ display: "flex", minHeight: "100vh", fontFamily: "Arial" }}>
       <aside style={{ width: 220, background: "#0f172a", color: "white", padding: 16 }}>
-        <h3>Smart Admin</h3>
+        <h3>Smart Админ</h3>
         <nav style={{ display: "grid", gap: 10 }}>
-          <Link to="/dashboard" style={{ color: "white" }}>Dashboard</Link>
-          <Link to="/users" style={{ color: "white" }}>Users</Link>
-          <Link to="/tasks" style={{ color: "white" }}>Tasks</Link>
-          <Link to="/audits" style={{ color: "white" }}>Audits</Link>
-          <Link to="/reports" style={{ color: "white" }}>Reports</Link>
+          <Link to="/dashboard" style={{ color: "white" }}>Хянах самбар</Link>
+          <Link to="/users" style={{ color: "white" }}>Хэрэглэгчид</Link>
+          <Link to="/tasks" style={{ color: "white" }}>Даалгавар</Link>
+          <Link to="/audits" style={{ color: "white" }}>Аудит</Link>
+          <Link to="/reports" style={{ color: "white" }}>Тайлан</Link>
         </nav>
-        <button style={{ marginTop: 20 }} onClick={() => { clearToken(); navigate('/login'); }}>Logout</button>
+        <button style={{ marginTop: 20 }} onClick={() => { clearToken(); navigate('/login'); }}>Гарах</button>
       </aside>
       <main style={{ flex: 1, padding: 20 }}>{children}</main>
     </div>

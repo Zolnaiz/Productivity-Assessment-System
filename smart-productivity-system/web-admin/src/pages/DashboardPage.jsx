@@ -22,8 +22,8 @@ export default function DashboardPage() {
       chartRef.current = new Chart(canvasRef.current, {
         type: "bar",
         data: {
-          labels: ["Completed", "Pending", "Audit Score"],
-          datasets: [{ label: "Productivity", data: [completed, pending, avgAudit] }],
+          labels: ["Дууссан", "Хүлээгдэж буй", "Аудитын оноо"],
+          datasets: [{ label: "Бүтээмж", data: [completed, pending, avgAudit] }],
         },
       });
     };
@@ -33,15 +33,15 @@ export default function DashboardPage() {
   }, []);
 
   const cards = [
-    ["Total Tasks", stats.total],
-    ["Completed", stats.completed],
-    ["Pending", stats.pending],
-    ["Avg Audit", stats.avgAudit],
+    ["Нийт даалгавар", stats.total],
+    ["Дууссан", stats.completed],
+    ["Хүлээгдэж буй", stats.pending],
+    ["Дундаж аудит", stats.avgAudit],
   ];
 
   return (
     <div>
-      <h2>Dashboard</h2>
+      <h2>Хянах самбар</h2>
       <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 10, marginBottom: 16 }}>
         {cards.map(([k, v]) => (
           <div key={k} style={{ background: "#e2e8f0", padding: 10 }}>

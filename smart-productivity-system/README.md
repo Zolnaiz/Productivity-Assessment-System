@@ -1,33 +1,33 @@
 # Smart Productivity Management System
 
-Full-stack implementation:
+Энэ нь бүтэн stack хэрэгжилттэй систем:
 - Mobile App: React Native (Expo)
 - Web Admin: React + Vite
 - Backend API: Node.js + Express
 - Database: PostgreSQL
 
-## ✅ Implemented Functional Requirements
+## ✅ Хийгдсэн боломжууд
 
-### Authentication
+### Нэвтрэлт ба эрх
 - `POST /auth/login` (JWT)
 - `POST /auth/logout`
-- Roles: `Admin`, `Manager`, `Employee`
+- Эрхийн түвшин: `Admin`, `Manager`, `Employee`
 
 ### Mobile App
-- Login Screen
-- Dashboard Screen (task summary + audit score)
-- Task List Screen
-- Task Detail Screen (status update)
-- 5S Audit Form Screen (score + image list)
-- Improvement Ideas Screen (submit + vote)
+- Нэвтрэх дэлгэц
+- Хянах самбар (task summary + audit score)
+- Даалгаврын жагсаалт
+- Даалгаврын дэлгэрэнгүй (төлөв шинэчлэх)
+- 5S аудитын форм (оноо + зураг)
+- Сайжруулалтын санал (санал оруулах + vote)
 
 ### Web Admin
-- Login Page
-- Dashboard Page (stats + Chart.js)
-- User Management (CRUD)
-- Task Management (CRUD)
-- Audit Results
-- Reports Export (CSV + PDF)
+- Нэвтрэх хуудас
+- Dashboard (статистик + Chart.js)
+- Хэрэглэгчийн удирдлага (CRUD)
+- Даалгаврын удирдлага (CRUD)
+- Аудитын үр дүн
+- Тайлан татах (CSV + PDF)
 
 ### Backend REST API
 - `POST /auth/login`
@@ -49,14 +49,14 @@ Full-stack implementation:
 - `GET /reports/tasks.csv`
 - `GET /reports/tasks.pdf`
 
-## Database Tables
+## Database хүснэгтүүд
 - `users`
 - `departments`
 - `tasks`
 - `audits`
 - `improvement_ideas`
 
-## Quick Start
+## Асаах заавар
 
 ### 1) Database
 ```bash
@@ -86,12 +86,12 @@ npm install
 npm run dev
 ```
 
-## Demo Accounts
+## Demo хаягууд
 - `admin@smart.com` / `123456`
 - `manager@smart.com` / `123456`
 - `employee@smart.com` / `123456`
 
-## Role Rules
-- Employee: own tasks, update own progress, submit audits/ideas
-- Manager: task/audit oversight + reports
-- Admin: full access + user management
+## Эрхийн дүрэм
+- Employee: өөрийн task-г харах/шинэчлэх, audit/idea оруулах
+- Manager: task/audit хянах + тайлан
+- Admin: бүрэн эрх + хэрэглэгчийн удирдлага

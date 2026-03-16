@@ -20,10 +20,10 @@ export default function LoginPage() {
   };
 
   return <form onSubmit={onSubmit} style={{ maxWidth: 320, margin: "80px auto", display: "grid", gap: 10 }}>
-    <h2>Admin Login</h2>
-    <input value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" />
-    <input value={password} type="password" onChange={(e) => setPassword(e.target.value)} placeholder="Password" />
+    <h2>Админ нэвтрэх</h2>
+    <input value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Имэйл" />
+    <input value={password} type="password" onChange={(e) => setPassword(e.target.value)} placeholder="Нууц үг" />
     {error && <p style={{ color: "red" }}>{error}</p>}
-    <button>Login</button>
+    <button>Нэвтрэх</button>
   </form>;
 }
