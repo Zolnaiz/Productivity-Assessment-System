@@ -23,7 +23,8 @@ CREATE TABLE tasks (
   assigned_user INT REFERENCES users(id),
   status VARCHAR(20) NOT NULL DEFAULT 'Pending' CHECK (status IN ('Pending', 'In Progress', 'Completed')),
   deadline DATE,
-  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT uq_tasks_dedup UNIQUE (title, assigned_user, deadline)
 );
 
 CREATE TABLE audits (
@@ -31,7 +32,8 @@ CREATE TABLE audits (
   department_id INT NOT NULL REFERENCES departments(id),
   score INT NOT NULL CHECK (score BETWEEN 0 AND 100),
   date DATE NOT NULL DEFAULT CURRENT_DATE,
-  images TEXT[] DEFAULT ARRAY[]::TEXT[]
+  images TEXT[] DEFAULT ARRAY[]::TEXT[],
+  CONSTRAINT uq_audits_department_date UNIQUE (department_id, date)
 );
 
 CREATE TABLE improvement_ideas (
@@ -40,5 +42,6 @@ CREATE TABLE improvement_ideas (
   description TEXT NOT NULL,
   votes INT NOT NULL DEFAULT 0,
   user_id INT NOT NULL REFERENCES users(id),
-  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT uq_ideas_title_user UNIQUE (title, user_id)
 );

@@ -17,16 +17,16 @@ VALUES
   ('Prepare daily report', 'Finish and submit daily KPI report', 3, 'Pending', CURRENT_DATE + INTERVAL '1 day'),
   ('Review task backlog', 'Manager reviews all pending tasks', 2, 'In Progress', CURRENT_DATE + INTERVAL '2 day'),
   ('System setup', 'Initial setup of productivity system', 1, 'Completed', CURRENT_DATE + INTERVAL '3 day')
-ON CONFLICT DO NOTHING;
+ON CONFLICT ON CONSTRAINT uq_tasks_dedup DO NOTHING;
 
 INSERT INTO audits (department_id, score, date, images)
 VALUES
   (1, 93, CURRENT_DATE, ARRAY['https://example.com/audit1.jpg']),
   (2, 87, CURRENT_DATE - INTERVAL '1 day', ARRAY['https://example.com/audit2.jpg'])
-ON CONFLICT DO NOTHING;
+ON CONFLICT ON CONSTRAINT uq_audits_department_date DO NOTHING;
 
 INSERT INTO improvement_ideas (title, description, votes, user_id)
 VALUES
   ('Kanban board', 'Use kanban board for visual task tracking', 5, 2),
   ('5S reminder', 'Daily reminder for 5S checklist completion', 3, 3)
-ON CONFLICT DO NOTHING;
+ON CONFLICT ON CONSTRAINT uq_ideas_title_user DO NOTHING;
