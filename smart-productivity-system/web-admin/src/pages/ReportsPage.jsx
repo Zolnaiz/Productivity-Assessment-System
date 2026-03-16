@@ -1,16 +1,15 @@
 import React from "react";
-import { getTaskReportUrl, getToken } from "../services/api";
+import { downloadTaskReport } from "../services/api";
 
 export default function ReportsPage() {
-  const openCsv = () => {
-    const url = `${getTaskReportUrl()}?token=${encodeURIComponent(getToken() || "")}`;
-    window.open(url, "_blank");
-  };
-
-  return <div>
-    <h2>Reports Export</h2>
-    <p>Task report CSV экспорт хийх.</p>
-    <button onClick={openCsv}>Export CSV</button>
-    <p style={{ marginTop: 10 }}>PDF export endpoint is planned in next iteration.</p>
-  </div>;
+  return (
+    <div>
+      <h2>Reports Export</h2>
+      <p>Task report экспорт (CSV болон PDF).</p>
+      <div style={{ display: "flex", gap: 8 }}>
+        <button onClick={() => downloadTaskReport("csv")}>Export CSV</button>
+        <button onClick={() => downloadTaskReport("pdf")}>Export PDF</button>
+      </div>
+    </div>
+  );
 }

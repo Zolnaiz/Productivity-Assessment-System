@@ -1,6 +1,6 @@
 # Smart Productivity Management System
 
-Full-stack MVP+ implementation:
+Full-stack implementation:
 - Mobile App: React Native (Expo)
 - Web Admin: React + Vite
 - Backend API: Node.js + Express
@@ -13,21 +13,21 @@ Full-stack MVP+ implementation:
 - `POST /auth/logout`
 - Roles: `Admin`, `Manager`, `Employee`
 
-### Mobile App (Employee/Manager/Admin)
+### Mobile App
 - Login Screen
-- Dashboard Screen (Task summary, Completed/Pending, 5S score)
+- Dashboard Screen (task summary + audit score)
 - Task List Screen
 - Task Detail Screen (status update)
-- 5S Audit Form Screen (score + image URL)
+- 5S Audit Form Screen (score + image list)
 - Improvement Ideas Screen (submit + vote)
 
-### Web Admin (Admin/Manager)
+### Web Admin
 - Login Page
-- Dashboard Page (summary + chart)
-- User Management Page (CRUD)
-- Task Management Page (CRUD)
-- Audit Results Page
-- Reports Page (CSV export)
+- Dashboard Page (stats + Chart.js)
+- User Management (CRUD)
+- Task Management (CRUD)
+- Audit Results
+- Reports Export (CSV + PDF)
 
 ### Backend REST API
 - `POST /auth/login`
@@ -45,7 +45,9 @@ Full-stack MVP+ implementation:
 - `GET /ideas`
 - `POST /ideas`
 - `POST /ideas/vote/:idea_id`
+- `POST /vote/:idea_id` (compatibility alias)
 - `GET /reports/tasks.csv`
+- `GET /reports/tasks.pdf`
 
 ## Database Tables
 - `users`
@@ -53,28 +55,6 @@ Full-stack MVP+ implementation:
 - `tasks`
 - `audits`
 - `improvement_ideas`
-
-## Project Structure
-
-```text
-smart-productivity-system/
-  backend/
-    middleware/
-    routes/
-    database/
-    server.js
-  database/
-    schema.sql
-    init.sql
-    seed.sql
-  mobile-app/
-    screens/
-    services/
-    App.js
-  web-admin/
-    src/pages/
-    src/services/
-```
 
 ## Quick Start
 
@@ -113,10 +93,5 @@ npm run dev
 
 ## Role Rules
 - Employee: own tasks, update own progress, submit audits/ideas
-- Manager: team/task/audit management + reports
+- Manager: task/audit oversight + reports
 - Admin: full access + user management
-
-## Non-Functional Notes
-- Security: bcrypt hash + JWT + RBAC
-- Maintainability: module-based routes
-- Extensibility: separate route files for each domain module

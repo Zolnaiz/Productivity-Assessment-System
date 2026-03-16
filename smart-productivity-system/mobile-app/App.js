@@ -7,6 +7,7 @@ import TaskListScreen from "./screens/TaskListScreen";
 import TaskDetailScreen from "./screens/TaskDetailScreen";
 import AuditFormScreen from "./screens/AuditFormScreen";
 import ImprovementIdeasScreen from "./screens/ImprovementIdeasScreen";
+import { logoutRequest } from "./services/api";
 
 export default function App() {
   const [bootLoading, setBootLoading] = useState(true);
@@ -35,10 +36,18 @@ export default function App() {
   };
 
   const handleLogout = async () => {
-    await AsyncStorage.multiRemove(["token", "user"]);
-    setUser(null);
-    setToken(null);
-    setActiveScreen("dashboard");
+    try {
+      if (token) {
+        await logoutRequest(token);
+      }
+    } catch (_error) {
+      // ignore network/logout endpoint errors on client logout
+    } finally {
+      await AsyncStorage.multiRemove(["token", "user"]);
+      setUser(null);
+      setToken(null);
+      setActiveScreen("dashboard");
+    }
   };
 
   if (bootLoading) {

@@ -6,6 +6,7 @@ const userRoutes = require("./routes/users");
 const auditRoutes = require("./routes/audits");
 const ideaRoutes = require("./routes/ideas");
 const reportRoutes = require("./routes/reports");
+const voteRoutes = require("./routes/vote");
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -23,6 +24,7 @@ app.use("/tasks", taskRoutes);
 app.use("/audits", auditRoutes);
 app.use("/ideas", ideaRoutes);
 app.use("/reports", reportRoutes);
+app.use("/vote", voteRoutes);
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
