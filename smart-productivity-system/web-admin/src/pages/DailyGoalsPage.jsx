@@ -1,0 +1,2 @@
+import React,{useState} from 'react';
+export default function DailyGoalsPage(){ const [goals,setGoals]=useState(()=>JSON.parse(localStorage.getItem('goals')||'[]')); const [g,setG]=useState(''); const add=()=>{if(!g.trim())return; const n=[...goals,{text:g,done:false}]; setGoals(n); localStorage.setItem('goals',JSON.stringify(n)); setG('');}; return <div><h2>Daily Goals</h2><input value={g} onChange={e=>setG(e.target.value)}/><button onClick={add}>Add</button><ul>{goals.map((x,i)=><li key={i}>{x.text}</li>)}</ul></div>; }
