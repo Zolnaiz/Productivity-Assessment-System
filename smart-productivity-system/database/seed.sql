@@ -1,4 +1,6 @@
-\c productivity;
+-- Sample/demo seed data.
+-- Run with: psql -U postgres -d productivity -f database/seed.sql
+
 
 INSERT INTO departments (name)
 VALUES ('Production'), ('Quality'), ('Warehouse')

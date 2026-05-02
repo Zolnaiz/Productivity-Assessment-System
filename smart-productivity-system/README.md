@@ -61,18 +61,32 @@ Backend `.env` дотор дараах хувьсагчид заавал бай�
 
 ### 1) Database
 **Location:** `smart-productivity-system/database`  
-**Purpose:** PostgreSQL schema болон seed өгөгдөл үүсгэх
+
+- `schema.sql` = **canonical schema (single source of truth)**. Бүх table definition, constraint-ууд зөвхөн энд засагдана.
+- `init.sql` = **docker-entrypoint bootstrap script**. Энэ нь schema-г `\i /docker-entrypoint-initdb.d/02-schema.sql` гэж reference хийж дуудаж ажиллуулна (өөрөө schema-г давтаж агуулахгүй).
+- `seed.sql` = **sample/demo өгөгдөл** (optional).
+
+Docker (first init only):
 
 ```bash
 cd smart-productivity-system
 docker compose up -d
 ```
 
-Эсвэл PostgreSQL дээр шууд ажиллуулах бол:
+> `init.sql` автоматаар зөвхөн schema үүсгэнэ. Seed автоматаар ачаалахгүй.
+
+Local PostgreSQL дээр шууд ажиллуулах:
 
 ```bash
-psql -U postgres -f smart-productivity-system/database/schema.sql
-psql -U postgres -f smart-productivity-system/database/seed.sql
+psql -U postgres -d productivity -f smart-productivity-system/database/schema.sql
+psql -U postgres -d productivity -f smart-productivity-system/database/seed.sql   # optional
+```
+
+CI орчинд зөвлөмж:
+
+```bash
+psql -U postgres -d productivity -f smart-productivity-system/database/schema.sql
+# seed.sql-ийг зөвхөн integration/demo test хэрэгтэй үед ажиллуул
 ```
 
 ### 2) Backend

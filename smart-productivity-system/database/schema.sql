@@ -1,5 +1,6 @@
-CREATE DATABASE productivity;
-\c productivity;
+-- Canonical database schema (single source of truth).
+-- Run with: psql -U postgres -d productivity -f database/schema.sql
+
 
 CREATE TABLE departments (
   id SERIAL PRIMARY KEY,
@@ -87,7 +88,8 @@ CREATE TABLE improvement_ideas (
   description TEXT NOT NULL,
   votes INT NOT NULL DEFAULT 0,
   user_id INT NOT NULL REFERENCES users(id),
-  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT uq_ideas_title_user UNIQUE (title, user_id)
 );
 
 
