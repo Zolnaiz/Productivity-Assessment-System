@@ -41,9 +41,10 @@
 - Ideas: `GET/POST /ideas`, `POST /ideas/vote/:idea_id`
 - Reports: `GET /reports/tasks.csv`, `GET /reports/tasks.pdf`
 
-## Required Environment Variables
+## Environment Configuration
 
-Backend `.env` дотор дараах хувьсагчид заавал байна:
+### `.env.example` бүтэц
+`smart-productivity-system/backend/.env.example` файл нь backend-ийн minimum required хувьсагчдыг агуулна:
 - `JWT_SECRET`
 - `DB_HOST`
 - `DB_PORT`
@@ -56,6 +57,23 @@ Backend `.env` дотор дараах хувьсагчид заавал бай�
 - `EMAIL_USER`
 - `EMAIL_PASS`
 - `CLIENT_URL`
+
+`.env` үүсгэхдээ:
+```bash
+cd smart-productivity-system/backend
+cp .env.example .env
+```
+
+> Backend нь дээрх DB хувьсагчид (`DB_HOST`, `DB_PORT`, `DB_NAME`, `DB_USER`, `DB_PASSWORD`) байхгүй бол startup дээр explicit error throw хийж зогсоно.
+
+### Docker Compose-д шаардлагатай `.env`
+`smart-productivity-system/docker-compose.yml` нь Postgres нууц үгийг plaintext биш, root `.env` файлаас уншина:
+- `POSTGRES_PASSWORD`
+
+Root `.env` жишээ:
+```env
+POSTGRES_PASSWORD=change_me
+```
 
 ## Setup
 
@@ -74,6 +92,7 @@ docker compose up -d
 ```
 
 > `init.sql` автоматаар зөвхөн schema үүсгэнэ. Seed автоматаар ачаалахгүй.
+> `docker compose up` ажиллуулахын өмнө `smart-productivity-system/.env` дотор `POSTGRES_PASSWORD`-аа заавал тохируулна.
 
 Local PostgreSQL дээр шууд ажиллуулах:
 
@@ -124,7 +143,9 @@ npm install
 npm run dev
 ```
 
-## Demo Accounts
+## Demo Accounts (Development Only)
+
+⚠️ Эдгээр demo credential-ууд нь **зөвхөн development/demo орчинд** ашиглах зориулалттай. Production орчинд ашиглахыг хориглоно.
 
 - **Admin:** `admin@smart.com` / `123456`
 - **Manager:** `manager@smart.com` / `123456`

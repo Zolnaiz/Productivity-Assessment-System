@@ -7,7 +7,7 @@ services:
     environment:
       POSTGRES_DB: productivity
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: 1234
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     ports:
       - "5432:5432"
     volumes:
