@@ -88,3 +88,11 @@ CREATE TABLE IF NOT EXISTS improvement_ideas (
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   CONSTRAINT uq_ideas_title_user UNIQUE (title, user_id)
 );
+
+
+CREATE TABLE IF NOT EXISTS idea_votes (
+  idea_id INT NOT NULL REFERENCES improvement_ideas(id) ON DELETE CASCADE,
+  user_id INT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT uq_idea_votes UNIQUE (idea_id, user_id)
+);

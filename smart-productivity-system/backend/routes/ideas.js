@@ -38,15 +38,73 @@ router.post("/", async (req, res) => {
 });
 
 router.post("/vote/:idea_id", async (req, res) => {
+  const client = await pool.connect();
+  let isTransactionOpen = false;
   try {
-    const result = await pool.query(
-      `UPDATE improvement_ideas SET votes = votes + 1 WHERE id=$1 RETURNING *`,
-      [req.params.idea_id]
+    const ideaId = req.params.idea_id;
+    const userId = req.user.id;
+
+    const existingVoteResult = await client.query(
+      `SELECT 1 FROM idea_votes WHERE idea_id = $1 AND user_id = $2 LIMIT 1`,
+      [ideaId, userId]
     );
-    if (!result.rows.length) return res.status(404).json({ success: false, message: "Idea not found" });
-    return res.json({ success: true, data: result.rows[0] });
+
+    if (existingVoteResult.rows.length) {
+      return res.status(409).json({
+        success: false,
+        message: "You have already voted for this idea",
+        policy: "duplicate_vote_returns_409"
+      });
+    }
+
+    await client.query("BEGIN");
+    isTransactionOpen = true;
+
+    const voteInsertResult = await client.query(
+      `INSERT INTO idea_votes (idea_id, user_id) VALUES ($1, $2) RETURNING idea_id`,
+      [ideaId, userId]
+    );
+
+    if (!voteInsertResult.rows.length) {
+      throw new Error("Failed to register vote");
+    }
+
+    const ideaUpdateResult = await client.query(
+      `UPDATE improvement_ideas
+       SET votes = votes + 1
+       WHERE id = $1
+       RETURNING *`,
+      [ideaId]
+    );
+
+    if (!ideaUpdateResult.rows.length) {
+      await client.query("ROLLBACK");
+      return res.status(404).json({ success: false, message: "Idea not found" });
+    }
+
+    await client.query("COMMIT");
+    isTransactionOpen = false;
+    return res.json({
+      success: true,
+      data: ideaUpdateResult.rows[0],
+      policy: "duplicate_vote_returns_409"
+    });
   } catch (error) {
+    if (isTransactionOpen) {
+      await client.query("ROLLBACK");
+    }
+
+    if (error.code === "23505") {
+      return res.status(409).json({
+        success: false,
+        message: "You have already voted for this idea",
+        policy: "duplicate_vote_returns_409"
+      });
+    }
+
     return res.status(500).json({ success: false, message: "Failed to vote", error: error.message });
+  } finally {
+    client.release();
   }
 });
 

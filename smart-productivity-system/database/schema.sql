@@ -89,3 +89,11 @@ CREATE TABLE improvement_ideas (
   user_id INT NOT NULL REFERENCES users(id),
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
+
+
+CREATE TABLE  idea_votes (
+  idea_id INT NOT NULL REFERENCES improvement_ideas(id) ON DELETE CASCADE,
+  user_id INT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT uq_idea_votes UNIQUE (idea_id, user_id)
+);
