@@ -1,6 +1,5 @@
-<<<<<<< HEAD
 import React, { useEffect, useState } from "react";
-import { ActivityIndicator, SafeAreaView, StatusBar, View } from "react-native";
+import { ActivityIndicator, SafeAreaView, StatusBar } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import LoginScreen from "./screens/LoginScreen";
 import DashboardScreen from "./screens/DashboardScreen";
@@ -42,7 +41,7 @@ export default function App() {
         await logoutRequest(token);
       }
     } catch (_error) {
-      // ignore network/logout endpoint errors on client logout
+      // Ignore API logout errors on client-side signout.
     } finally {
       await AsyncStorage.multiRemove(["token", "user"]);
       setUser(null);
@@ -52,14 +51,26 @@ export default function App() {
   };
 
   if (bootLoading) {
-    return <SafeAreaView style={{ flex: 1 }}><ActivityIndicator style={{ marginTop: 100 }} /></SafeAreaView>;
+    return (
+      <SafeAreaView style={{ flex: 1 }}>
+        <ActivityIndicator style={{ marginTop: 100 }} />
+      </SafeAreaView>
+    );
   }
 
   const commonProps = { user, token, onLogout: handleLogout, navigate: setActiveScreen };
 
   const renderAuthenticated = () => {
     if (activeScreen === "tasks") {
-      return <TaskListScreen {...commonProps} onOpenTask={(task) => { setSelectedTask(task); setActiveScreen("taskDetail"); }} />;
+      return (
+        <TaskListScreen
+          {...commonProps}
+          onOpenTask={(task) => {
+            setSelectedTask(task);
+            setActiveScreen("taskDetail");
+          }}
+        />
+      );
     }
     if (activeScreen === "taskDetail") {
       return <TaskDetailScreen {...commonProps} task={selectedTask} onBack={() => setActiveScreen("tasks")} />;
@@ -67,25 +78,12 @@ export default function App() {
     if (activeScreen === "audit") return <AuditFormScreen {...commonProps} />;
     if (activeScreen === "ideas") return <ImprovementIdeasScreen {...commonProps} />;
     return <DashboardScreen {...commonProps} />;
-=======
-import React from "react";
-import { SafeAreaView, StatusBar } from "react-native";
-import LoginScreen from "./screens/LoginScreen";
-
-export default function App() {
-  const handleLoginSuccess = (user) => {
-    alert(`Login success: ${user.name}`);
->>>>>>> origin/main
   };
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <StatusBar barStyle="dark-content" />
-<<<<<<< HEAD
       {token && user ? renderAuthenticated() : <LoginScreen onLoginSuccess={handleLoginSuccess} />}
-=======
-      <LoginScreen onLoginSuccess={handleLoginSuccess} />
->>>>>>> origin/main
     </SafeAreaView>
   );
 }
