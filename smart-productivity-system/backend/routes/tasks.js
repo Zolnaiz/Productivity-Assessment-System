@@ -45,7 +45,18 @@ router.post("/:id/comments", commentValidator, validate, async (req, res) => {
 });
 router.delete("/:id/comments/:commentId", async (req, res) => {
   try {
-    await pool.query("DELETE FROM task_comments WHERE id=$1 AND task_id=$2", [req.params.commentId, req.params.id]);
+    const { id: userId, role } = req.user;
+    const { id: taskId, commentId } = req.params;
+    const commentResult = await pool.query("SELECT id, user_id, task_id FROM task_comments WHERE id=$1", [commentId]);
+    if (!commentResult.rows.length) return res.status(404).json({ success: false, message: "Comment not found" });
+
+    const comment = commentResult.rows[0];
+    if (Number(comment.task_id) !== Number(taskId)) return res.status(404).json({ success: false, message: "Comment not found" });
+
+    const canDelete = Number(comment.user_id) === Number(userId) || role === "Admin" || role === "Manager";
+    if (!canDelete) return res.status(403).json({ success: false, message: "Forbidden to delete this comment" });
+
+    await pool.query("DELETE FROM task_comments WHERE id=$1 AND task_id=$2 RETURNING *", [commentId, taskId]);
     return res.json({ success: true, message: "Comment deleted" });
   } catch (error) { return res.status(500).json({ success: false, message: "Failed to delete comment", error: error.message }); }
 });
