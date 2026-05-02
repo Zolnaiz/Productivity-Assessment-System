@@ -1,89 +1,57 @@
-<<<<<<< HEAD
 # Smart Productivity Management System
 
-Энэ нь бүтэн stack хэрэгжилттэй систем:
-- Mobile App: React Native (Expo)
-- Web Admin: React + Vite
-- Backend API: Node.js + Express
-- Database: PostgreSQL
+Энэ repository нь бүтэн stack хэрэгжилттэй productivity management system юм.
 
-## ✅ Хийгдсэн боломжууд
+- **Mobile App**: React Native (Expo)
+- **Web Admin**: React + Vite
+- **Backend API**: Node.js + Express
+- **Database**: PostgreSQL
 
-### Нэвтрэлт ба эрх
-- `POST /auth/login` (JWT)
-- `POST /auth/logout`
-- Эрхийн түвшин: `Admin`, `Manager`, `Employee`
+## Project structure
 
-### Mobile App
-- Нэвтрэх дэлгэц
-- Хянах самбар (task summary + audit score)
-- Даалгаврын жагсаалт
-- Даалгаврын дэлгэрэнгүй (төлөв шинэчлэх)
-- 5S аудитын форм (оноо + зураг)
-- Сайжруулалтын санал (санал оруулах + vote)
+- `smart-productivity-system/backend` — REST API (`/auth`, `/users`, `/tasks`, `/audits`, `/ideas`, `/reports`)
+- `smart-productivity-system/database` — `schema.sql`, `seed.sql`
+- `smart-productivity-system/mobile-app` — Expo mobile app
+- `smart-productivity-system/web-admin` — Vite admin dashboard
 
-### Web Admin
-- Нэвтрэх хуудас
-- Dashboard (статистик + Chart.js)
-- Хэрэглэгчийн удирдлага (CRUD)
-- Даалгаврын удирдлага (CRUD)
-- Аудитын үр дүн
-- Тайлан татах (CSV + PDF)
+## Features
 
-### Backend REST API
-- `POST /auth/login`
-- `POST /auth/logout`
-- `GET /users`
-- `POST /users`
-- `PUT /users/:id`
-- `DELETE /users/:id`
-- `GET /tasks`
-- `POST /tasks`
-- `PUT /tasks/:id`
-- `DELETE /tasks/:id`
-- `GET /audits`
-- `POST /audits`
-- `GET /ideas`
-- `POST /ideas`
-- `POST /ideas/vote/:idea_id`
-- `POST /vote/:idea_id` (compatibility alias)
-- `GET /reports/tasks.csv`
-- `GET /reports/tasks.pdf`
+### Authentication & roles
+- JWT login/logout
+- Role-based access: `Admin`, `Manager`, `Employee`
 
-## Database хүснэгтүүд
-- `users`
-- `departments`
-- `tasks`
-- `audits`
-- `improvement_ideas`
+### Mobile app
+- Login
+- Dashboard (task summary + audit score)
+- Task list + task detail/update
+- 5S audit form
+- Improvement ideas (create + vote)
 
-## Асаах заавар
+### Web admin
+- Login
+- Dashboard + charts
+- User management (CRUD)
+- Task management (CRUD)
+- Audit results
+- Report export (CSV/PDF)
 
-### 1) Database
+## Setup guide
+
+### 1) Database setup
+
+#### Option A: Docker Compose
 ```bash
 cd smart-productivity-system
 docker compose up -d
 ```
 
-### 2) Backend
-=======
-# Smart Productivity Management System (MVP Start)
+#### Option B: Run SQL manually
+```bash
+psql -U postgres -f smart-productivity-system/database/schema.sql
+psql -U postgres -f smart-productivity-system/database/seed.sql
+```
 
-This repository now contains the first implementation phase:
-
-1. Backend API (`Node.js + Express`)
-2. Database scripts (`PostgreSQL`)
-3. Mobile Login screen (`React Native + Expo`)
-
-## Project structure
-
-- `smart-productivity-system/backend` — Express API with `/auth/login`
-- `smart-productivity-system/database` — `schema.sql` and `seed.sql`
-- `smart-productivity-system/mobile-app` — Expo mobile app with login screen
-
-## 1) Backend setup
-
->>>>>>> origin/main
+### 2) Backend setup
 ```bash
 cd smart-productivity-system/backend
 cp .env.example .env
@@ -91,46 +59,32 @@ npm install
 npm start
 ```
 
-<<<<<<< HEAD
-### 3) Mobile
-=======
-API base URL: `http://localhost:5000`
+Backend runs at: `http://localhost:5000`
 
-## 2) Database setup
-
-Run in PostgreSQL:
-
-```bash
-psql -U postgres -f smart-productivity-system/database/schema.sql
-psql -U postgres -f smart-productivity-system/database/seed.sql
-```
-
-## 3) Mobile app setup
-
->>>>>>> origin/main
+### 3) Mobile app setup
 ```bash
 cd smart-productivity-system/mobile-app
 npm install
 npm start
 ```
 
-<<<<<<< HEAD
-### 4) Web Admin
+> Android emulator uses `10.0.2.2` in `mobile-app/services/api.js` to reach your local backend.
+
+### 4) Web admin setup
 ```bash
 cd smart-productivity-system/web-admin
 npm install
 npm run dev
 ```
 
-## Demo хаягууд
+## Demo accounts
+
 - `admin@smart.com` / `123456`
 - `manager@smart.com` / `123456`
 - `employee@smart.com` / `123456`
 
-## Эрхийн дүрэм
-- Employee: өөрийн task-г харах/шинэчлэх, audit/idea оруулах
-- Manager: task/audit хянах + тайлан
-- Admin: бүрэн эрх + хэрэглэгчийн удирдлага
-=======
-For Android emulator, `10.0.2.2` is used in `services/api.js` so the app can reach your local backend.
->>>>>>> origin/main
+## Role rules
+
+- **Employee**: өөрийн task харах/шинэчлэх, audit/idea оруулах
+- **Manager**: task/audit хянах, тайлан харах
+- **Admin**: бүрэн эрх, хэрэглэгчийн удирдлага

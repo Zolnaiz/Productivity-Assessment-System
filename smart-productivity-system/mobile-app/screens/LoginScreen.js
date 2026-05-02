@@ -33,11 +33,7 @@ export default function LoginScreen({ onLoginSuccess }) {
         await AsyncStorage.setItem("user", JSON.stringify(data.user));
 
         if (onLoginSuccess) {
-<<<<<<< HEAD
           onLoginSuccess(data.user, data.token);
-=======
-          onLoginSuccess(data.user);
->>>>>>> origin/main
         }
       } else {
         setError("Login failed");
