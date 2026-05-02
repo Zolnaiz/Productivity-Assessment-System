@@ -1,0 +1,3 @@
+import React,{useEffect,useState} from 'react';
+import { getToken } from '../services/api';
+export default function DepartmentsPage(){ const [rows,setRows]=useState([]); const [name,setName]=useState(''); const load=()=>fetch('http://localhost:5000/departments',{headers:{Authorization:`Bearer ${getToken()}`}}).then(r=>r.json()).then(d=>setRows(d.data||[])); useEffect(load,[]); const add=()=>fetch('http://localhost:5000/departments',{method:'POST',headers:{'Content-Type':'application/json',Authorization:`Bearer ${getToken()}`},body:JSON.stringify({name})}).then(load); return <div><h2>Departments</h2><input value={name} onChange={e=>setName(e.target.value)}/><button onClick={add}>Add</button><ul>{rows.map(r=><li key={r.id}>{r.name}</li>)}</ul></div>; }
