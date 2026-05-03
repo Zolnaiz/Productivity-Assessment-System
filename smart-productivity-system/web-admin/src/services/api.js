@@ -4,6 +4,31 @@ export const setToken = (token) => localStorage.setItem("token", token);
 export const getToken = () => localStorage.getItem("token");
 export const clearToken = () => localStorage.removeItem("token");
 
+const decodeBase64Url = (input) => {
+  const normalized = input.replace(/-/g, "+").replace(/_/g, "/");
+  const padded = normalized + "=".repeat((4 - (normalized.length % 4)) % 4);
+  return atob(padded);
+};
+
+export const getCurrentUser = () => {
+  const token = getToken();
+  if (!token) return null;
+  const [, payload] = token.split(".");
+  if (!payload) return null;
+
+  try {
+    const decoded = JSON.parse(decodeBase64Url(payload));
+    return {
+      id: decoded.id,
+      email: decoded.email,
+      role: decoded.role,
+      department_id: decoded.department_id,
+    };
+  } catch (_error) {
+    return null;
+  }
+};
+
 async function request(path, options = {}) {
   const token = getToken();
   const res = await fetch(`${API_BASE_URL}${path}`, {
