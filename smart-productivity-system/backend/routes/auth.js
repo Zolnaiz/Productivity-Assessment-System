@@ -38,7 +38,8 @@ router.post("/login", limiter, loginValidator, validate, async (req, res) => {
     const token = jwt.sign({ id: dbUser.id, email: dbUser.email, role: dbUser.role, department_id: dbUser.department_id }, process.env.JWT_SECRET, { expiresIn: "8h" });
     return res.json({ success: true, token, user: { id: dbUser.id, name: dbUser.name, email: dbUser.email, role: dbUser.role, department_id: dbUser.department_id } });
   } catch (error) {
-    return res.status(500).json({ success: false, message: "Server error" });
+    console.error("[auth/login]", error);
+    return res.status(500).json({ success: false, message: "Server error", details: process.env.NODE_ENV === "development" ? error.message : undefined });
   }
 });
 
