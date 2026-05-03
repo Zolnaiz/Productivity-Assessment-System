@@ -155,3 +155,25 @@ npm run dev
 - **Employee:** өөрийн task харах/шинэчлэх, audit ба idea оруулах
 - **Manager:** task/audit хянах, тайлан үзэх
 - **Admin:** бүрэн эрх + хэрэглэгчийн удирдлага
+
+## Troubleshooting Login Errors
+
+If web login shows **"Server error"**:
+
+1. Verify backend health:
+   ```bash
+   curl http://localhost:5000/health
+   ```
+2. Ensure schema and seed are loaded:
+   ```bash
+   psql -U postgres -d productivity -f smart-productivity-system/database/schema.sql
+   psql -U postgres -d productivity -f smart-productivity-system/database/seed.sql
+   ```
+3. Test login API directly:
+   ```bash
+   curl -X POST http://localhost:5000/auth/login \
+     -H "Content-Type: application/json" \
+     -d '{"email":"admin@smart.com","password":"123456"}'
+   ```
+
+For PowerShell use `Invoke-RestMethod` instead of `curl` alias when posting JSON.
